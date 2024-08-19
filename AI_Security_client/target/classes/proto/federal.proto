@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package filetransfer;
+
+option java_multiple_files = true;
+
+message request_init {
+  bytes ctx_content = 1;//密钥文件内容
+  bytes paras_content = 2;//参数文件内容
+  int32 round = 3;//当前轮次从1开始
+}
+
+message request {
+  bytes paras_content = 1;//参数文件内容
+  int32 round = 2;//当前轮次
+}
+
+message response {
+  bytes paras_content = 1;//参数文件内容
+  bytes result_content = 2;//结果文件内容，csv格式
+  bytes gradients_content = 3;//梯度文件，npy格式
+}
+
+message request_detect {
+
+}
+
+message response_detect {
+  bytes result_detect = 1;//有问题的流
+}
+service FileService {
+  rpc processinit (request_init) returns (response);
+  rpc process (request) returns (response);
+  rpc detect (request_detect) returns (response_detect);
+}

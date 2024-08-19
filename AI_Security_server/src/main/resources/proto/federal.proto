@@ -1,0 +1,30 @@
+syntax = "proto3";
+package example;
+
+option java_multiple_files = true;
+
+message Request_init {
+    //空请求即可
+}
+
+message Response_init {
+    bytes para_file_content = 1;  //参数文件内容
+    bytes ctx_file_content = 2; //ctx密钥文件内容
+}
+
+message Request {
+    int32 number = 1; //客户端数量
+    int32 round = 2; //当前轮次
+    repeated bytes encrypted_file_content = 3; //加密文件内容
+    repeated bytes gradients = 4; //模型梯度文件
+}
+
+message Response {
+    bytes agg_para_file_content = 1; //聚合后的参数文件内容
+    bytes result = 2;//聚合后模型的结果文件，csv文件
+}
+
+service ArithmeticServer {
+  rpc server_init (Request_init) returns (Response_init);
+  rpc send_aggregated_para (Request) returns (Response);
+}

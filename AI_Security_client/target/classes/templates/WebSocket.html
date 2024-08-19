@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebSocket</title>
+</head>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+
+<script>
+    var webSocket;
+    var heartbeatInterval;
+
+    function openWebSocket() {
+        var webSocketUrl = "http://localhost:8000/webSocket";
+        webSocketUrl = webSocketUrl.replace("https", "ws").replace("http", "ws");
+        console.log(webSocketUrl);
+        if (webSocket != null) {
+            webSocket.close();
+            webSocket = null;
+        }
+        webSocket = new WebSocket(webSocketUrl, [$("#token").val()]);
+
+        webSocket.onopen = function () {
+            console.log("WebSocket已打开");
+            startHeartbeat();
+        };
+
+        webSocket.onclose = function (e) {
+            console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
+            console.log(e)
+            clearInterval(heartbeatInterval);
+        };
+
+        webSocket.onerror = function () {
+            console.log("WebSocket发生了错误");
+        }
+
+        webSocket.onmessage = function (msg) {
+            console.log(msg.data);
+        };
+    }
+
+    function sendMessage() {
+        console.log($("#message").val())
+        webSocket.send($("#message").val());
+    }
+
+    function sendHeartbeat() {
+        // 发送心跳消息
+        webSocket.send("heartbeat");
+    }
+
+    function startHeartbeat() {
+        // 每30秒发送一次心跳消息
+        heartbeatInterval = setInterval(sendHeartbeat, 30000);
+    }
+</script>
+
+<body>
+<p>【token】：
+<div><input id="token" name="token" type="text"
+            value="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0NTkzYTE3NTc5NGI0ZTJlYWRkOTNiYjdjYzdlMDhlNyIsInN1YiI6IjE3ODUxNDIyOTA2MjYwNjQzODYiLCJpYXQiOjE3MTQ4OTQyMzksImV4cCI6MTcxNjE5MDIzOX0.5LeMAXfFp23GacmFD1Uq_jIQGf02n9u6W3cWJf7S-xg">
+</div>
+
+<p>【message】：
+<div><input id="message" name="message" type="text" value="Hello WebSocket"></div>
+
+<p>【操作】：
+<div>
+    <button onclick="openWebSocket()">建立WebSocket链接</button>
+</div>
+
+<p>【操作】：
+<div>
+    <button onclick="sendMessage()">发送信息</button>
+</div>
+</body>
+</html>

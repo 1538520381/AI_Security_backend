@@ -1,0 +1,28 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: AI_Security_server
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.213.128:3306/trustyfl_server?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: Persolute
+    password: mYsQl9572580729
+
+  redis:
+    database: 0
+    host: 192.168.213.128
+    port: 6379
+    timeout: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+TrustyFL-server:
+  path:
+    avatar: E:\Persolute\code\project\TrustyFL\Code\back_end\AI_Security_backend\AI_Security_server\src\main\resources\file\avatar\
+

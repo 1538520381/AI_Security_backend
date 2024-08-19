@@ -1,0 +1,42 @@
+syntax = "proto3";
+package example;
+
+option java_package = "com.example.grpc";
+option java_multiple_files = true;
+option java_outer_classname = "FederalProto";
+
+message Request {
+  string ip = 1;
+  string url = 2;
+  string type = 3;
+  string datainfoReq = 4;
+}
+
+message Response {
+  string ip = 1;
+  string datainfoRet = 2;
+  string time = 3;
+  int32 n = 4;
+  int32 n2 = 5;
+  int32 n3 = 6;
+  repeated string x1 = 7;
+  repeated int32 y1 = 8;
+  int32 r1 = 9;
+  int32 r2 = 10;
+  int32 r3 = 11;
+  int32 r21 = 12;
+  int32 r22 = 13;
+  int32 c1 = 14;
+  int32 c2 = 15;
+  repeated string columns = 16;
+  message Arr{
+    repeated double values = 17;
+  }
+  repeated Arr arr = 18;
+}
+
+
+service ArithmeticServer {
+  rpc dataInfo (Request) returns (Response);
+  rpc localTrain (Request) returns (Response);
+}

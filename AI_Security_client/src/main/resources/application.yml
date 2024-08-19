@@ -1,0 +1,31 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: TrustyFL_client
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 2048MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.213.128:3306/trustyfl_server?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: Persolute
+    password: mYsQl9572580729
+
+tencent:
+  cos:
+    file:
+      region: ap-nanjing
+      secretId: AKIDZ7Y6Zt7JJ6jHi4MXZP9mFfzFRYTEWfha
+      secretkey: thP9rTxKdqywfFoGYr6HMVcdcq150nYC
+      bucketname: ai-security-1327760111
+
+ok:
+  http:
+    connect-timeout: 30
+    read-timeout: 30
+    write-timeout: 30
+    max-idle-connections: 200
+    keep-alive-duration: 300
